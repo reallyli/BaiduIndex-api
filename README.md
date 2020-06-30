@@ -18,16 +18,15 @@ $ python3.7 index.py
 
 ## API
 
-- GET http://127.0.0.1:5000/baidu_index/search?cookie=your-cookie&keywords=your-keywords&start_date=y-m-d&end_date=y-m-d
+```
+--GET http://127.0.0.1:5000/baidu_index/search?cookie=your-cookie&keywords=your-keywords&start_date=y-m-d&end_date=y-m-d
+```
 
-## Links
+## Docs
 
-- https://dormousehole.readthedocs.io/en/latest/quickstart.html#id2
+- [Flask](https://dormousehole.readthedocs.io/en/latest/quickstart.html#id2)
+- [BaiduIndex](https://index.baidu.com/v2/index.html)
 
 ## Fork
 
-- https://github.com/longxiaofei/spider-BaiduIndex
-
-## Contacts
-
-- zreallyli@outlook.com
+- [spider-BaiduIndex](https://github.com/longxiaofei/spider-BaiduIndex)

@@ -7,20 +7,38 @@ import datetime
 
 app = Flask(__name__)
 
+def response(code, message):
+    response = {
+                'status_code': code,
+                'message': message
+            }
+    return jsonify(response), code
+
+def return_500_if_errors(f):
+    def wrapper(*args, **kwargs):
+        try:
+            return f(*args, **kwargs)
+        except:
+            return response(500, 'Internal Server Error')
+    return wrapper
+
 @app.route('/baidu_index/search', methods=['GET'])
+
+@return_500_if_errors
+
 def get_task():
     cookies = request.args.get('cookie')
     keywords = [request.args.get('keywords')]
     start_date = request.args.get('start_date')
     end_date = request.args.get('end_date')
     if cookies is None :
-        abort(422, {'message': 'Cookie is required.'})
+        return response(422, 'cookie is required.')
     if keywords is None:
-        abort(422, {'message': 'keywords is required.'})
+        return response(422, 'keywords is required.')
     if start_date is None:
-        abort(422, {'message': 'start_date is required.'})
+        return response(422, 'start_date is required.')
     if end_date is None:
-        abort(422, {'message': 'end_date is required.'})
+         return response(422, 'end_date is required.')
 
     baidu_index = BaiduIndex(
         keywords=keywords,

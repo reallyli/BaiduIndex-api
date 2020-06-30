@@ -4,6 +4,6 @@ A simple Baidu index Api.
 
 ## Requirements
 
-python3.5+
-requests==2.19.1
+- python3.5+
+- requests==2.19.1
 

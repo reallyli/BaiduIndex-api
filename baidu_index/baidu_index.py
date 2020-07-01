@@ -64,7 +64,7 @@ class BaiduIndex:
                 self._params_queue.put(params_data)
             except queue.Empty:
                 break
-            utils.sleep_func()
+            # utils.sleep_func()
 
     def _get_encrypt_datas(self, start_date, end_date, keywords):
         """

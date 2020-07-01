@@ -101,7 +101,7 @@ def sleep_func():
     """
         sleep方法, 单账号抓取过快, 一段时间内请求会失败
     """
-    sleep_time = random.choice(range(50, 90)) * 0.1
+    sleep_time = random.choice(range(1, 2)) * 0.1
     time.sleep(sleep_time)
 
 

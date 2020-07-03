@@ -2,6 +2,7 @@ from urllib.parse import urlencode
 import queue
 import datetime
 import json
+import logging
 
 import requests
 

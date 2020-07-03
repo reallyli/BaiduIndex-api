@@ -1,2 +1,2 @@
-from .baidu_index import BaiduIndex
+from .baidu_index import BaiduIndex,ResponseError
 from .extended_baidu_index import ExtendedBaiduIndex

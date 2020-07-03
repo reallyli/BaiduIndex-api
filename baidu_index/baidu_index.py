@@ -2,11 +2,14 @@ from urllib.parse import urlencode
 import queue
 import datetime
 import json
+from flask import current_app
 
 import requests
 
 from . import utils
 
+class ResponseError(RuntimeError):
+    pass
 
 class BaiduIndex:
     """
@@ -81,6 +84,11 @@ class BaiduIndex:
         url = 'http://index.baidu.com/api/SearchApi/index?' + urlencode(request_args)
         html = utils.http_get(url, self.cookies)
         datas = json.loads(html)
+
+        if datas['status'] != 0:
+            current_app.logger.info(datas)
+            raise ResponseError(datas)
+
         uniqid = datas['data']['uniqid']
         encrypt_datas = []
         for single_data in datas['data']['userIndexes']:

@@ -2,15 +2,17 @@
 #!flask/bin/python3.7
 
 from flask import abort,request,jsonify,Flask
-from baidu_index import BaiduIndex, ExtendedBaiduIndex
+from baidu_index import BaiduIndex, ExtendedBaiduIndex, ResponseError
 import datetime
+from flask import current_app
 
 app = Flask(__name__)
 
-def response(code, message):
+def response(code, message, error_code=0):
     response = {
                 'status_code': code,
-                'message': message
+                'message': message,
+                'error_code':error_code
             }
     return jsonify(response), code
 
@@ -18,8 +20,10 @@ def return_500_if_errors(f):
     def wrapper(*args, **kwargs):
         try:
             return f(*args, **kwargs)
-        except:
-            return response(500, 'Internal Server Error')
+        except ResponseError as e:
+            return response(400, e.args[0]['message'], e.args[0]['status'])
+        else:
+            return response(500, 'Internal Server Error', 500)
     return wrapper
 
 @app.route('/baidu_index/search', methods=['GET'])
@@ -28,7 +32,7 @@ def return_500_if_errors(f):
 
 def get_task():
     cookies = request.args.get('cookie')
-    keywords = [request.args.get('keywords')]
+    keywords = request.args.get('keywords')
     start_date = request.args.get('start_date')
     end_date = request.args.get('end_date')
     if cookies is None :
@@ -41,7 +45,7 @@ def get_task():
          return response(422, 'end_date is required.')
 
     baidu_index = BaiduIndex(
-        keywords=keywords,
+        keywords=keywords.split(','),
         start_date=start_date,
         end_date=end_date,
         cookies=cookies
